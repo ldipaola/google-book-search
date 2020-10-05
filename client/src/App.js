@@ -1,22 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Hero from './components/Hero';
+import Nav from './components/Nav';
+import Saved from './pages/Saved';
+import Search from './pages/Search';
+
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Nav />
+      <Hero />
+      <Switch>
+      <Route exact path="/" component={Search} />
+      <Route path="/saved" component={Saved} />
+      </Switch>
+    </Router>
   );
 }
 
