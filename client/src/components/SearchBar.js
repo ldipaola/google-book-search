@@ -9,9 +9,10 @@ export default function SearchBar() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const bookSearch = await axios.get("https://www.googleapis.com/books/v1/volumes?q="+search.trim())
+    const bookSearch = await axios.get("https://www.googleapis.com/books/v1/volumes?q="+search);
+
+    console.log(bookSearch);
     setBooks(bookSearch);
-    console.log(bookSearch.data.items[0]);
   }
 
   return (
@@ -23,7 +24,7 @@ export default function SearchBar() {
       </div>
       <div className="card-body">
       <div className="input-group ">
-          <input className="form-input" type="text" placeholder="search" onChange={(e) => setSearch(e.target.value)} />
+          <input className="form-input" type="text" placeholder="search" onChange={(e) => setSearch(e.target.value.trim())} />
           <button className="btn btn-primary input-group-btn" onClick={handleSubmit}>Search</button>
         </div>
       </div>
