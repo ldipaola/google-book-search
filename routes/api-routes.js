@@ -25,7 +25,7 @@ router.post("/api/books", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/api/books" , (req, res) => {
+router.get("/api/books/:id" , (req, res) => {
   db.Book.findById(req.params.id)
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
