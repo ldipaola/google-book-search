@@ -4,14 +4,13 @@ const db = require("../models");
 const ObjectId = require("mongodb").ObjectId;
 
 router.get("/api/books", async (req, res) => {
-  await db.Book.find({}).then((books) => {
-  res.json({books})
-}).catch((err) => console.log(err));
+  await db.Book.find({})
+  .then(dbModel => res.json(dbModel))
+  .catch((err) => console.log(err));
 });
 
 
-
-router.post("/api/addBook", async (req, res) => {
+router.post("/api/books", async (req, res) => {
   const { title, authors, description, image, link } = req.body;
   await db.Book.create({
     title: title,
@@ -20,10 +19,23 @@ router.post("/api/addBook", async (req, res) => {
     image: image,
     link: link
   })
-    .then((book) => {
-      res.json(book);
+    .then((dbModel) => {
+      res.json(dbModel);
     })
     .catch((err) => console.log(err));
+});
+
+router.get("/api/books" , (req, res) => {
+  db.Book.findById(req.params.id)
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+});
+
+router.delete("/api/books", (req, res) => {
+  db.Book.findById({ _id: req.params.id })
+    .then(dbModel => dbModel.remove())
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
 });
 
 module.exports = router;
