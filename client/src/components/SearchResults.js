@@ -1,13 +1,40 @@
 import React, { useContext } from "react";
 import BooksContext from "../utils/booksContext";
+import api from "../utils/api";
 import "./searchResults.css";
 
 export default function SearchResults() {
   const { books, setBooks } = useContext(BooksContext);
   let booksToRender = "";
+  const handleClick = function (e) {
+    e.preventDefault();
+    const bookToSave = books.data.items.find(element => element.id === e.currentTarget.dataset.value);
+    let bookData = "";
+    console.log(bookToSave);
+    if (bookToSave.volumeInfo.authors) {
+      bookData = {
+        title: bookToSave.volumeInfo.title,
+      authors: [...bookToSave.volumeInfo.authors],
+      description: bookToSave.volumeInfo.description,
+      image: bookToSave.volumeInfo.imageLinks.thumbnail,
+      link: bookToSave.volumeInfo.infoLink
+      }
+    } else if(!bookToSave.volumeInfo.authors){
+      bookData = {
+        title: bookToSave.volumeInfo.title,
+      authors: [...bookToSave.volumeInfo.publisher],
+      description: bookToSave.volumeInfo.description,
+      image: bookToSave.volumeInfo.imageLinks.thumbnail,
+      link: bookToSave.volumeInfo.infoLink
+      }
+
+    }
+    api.saveBook(bookData).then((book) => alert("Saved"))
+  };
+
   if (books) {
     booksToRender = books.data.items.map((book) => (
-      <div className="card search results">
+      <div  key={book.id} className="card search results">
         <div className="card-image">
           <img
             src={book.volumeInfo.imageLinks.thumbnail}
@@ -20,9 +47,9 @@ export default function SearchResults() {
             {book.volumeInfo.subtitle}
           </div>
           <div className="card-subtitle text-gray">
-            {book.volumeInfo.authors.map((author) => (
-              <p>{author}</p>
-            ))}
+            {book.volumeInfo.authors ? book.volumeInfo.authors.map((author) => (
+              <p style={{marginBottom: "0px"}}>{author}</p>
+            )) : <p style={{marginBottom: "0px"}}>{book.volumeInfo.publisher}</p> }
           </div>
         </div>
         <div className="card-body">{book.volumeInfo.description}</div>
@@ -33,11 +60,11 @@ export default function SearchResults() {
           >
             View
           </a>
-          <a href="#" className="btn btn-primary">Save</a>
+          <a href="#" className="btn btn-primary" data-value={book.id}  onClick={handleClick}>Save</a>
         </div>
       </div>
     ));
   }
 
-  return <div className="container results">{books ? booksToRender : <p></p>}</div>;
+  return <div className="container results" style={{marginBottom: "8px"}}>{books ? booksToRender : <p></p>}</div>;
 }
