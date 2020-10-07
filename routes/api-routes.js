@@ -1,7 +1,6 @@
 // Requiring our models and passport as we've configured it
 const router = require("express").Router();
 const db = require("../models");
-const ObjectId = require("mongodb").ObjectId;
 
 router.get("/api/books", async (req, res) => {
   await db.Book.find({})
@@ -31,7 +30,7 @@ router.get("/api/books/:id" , (req, res) => {
     .catch(err => res.status(422).json(err));
 });
 
-router.delete("/api/books", (req, res) => {
+router.delete("/api/books/:id", (req, res) => {
   db.Book.findById({ _id: req.params.id })
     .then(dbModel => dbModel.remove())
     .then(dbModel => res.json(dbModel))
