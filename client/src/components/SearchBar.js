@@ -5,14 +5,15 @@ import BooksContext from "../utils/booksContext";
 export default function SearchBar() {
   const [search, setSearch] = useState("");
 
-  const { books , setBooks } = useContext(BooksContext);
+  const { setBooks } = useContext(BooksContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const bookSearch = await axios.get("https://www.googleapis.com/books/v1/volumes?q="+search);
+    const bookSearch = await axios.get("https://www.googleapis.com/books/v1/volumes?q="+search+"intitle");
 
     console.log(bookSearch);
-    setBooks(bookSearch);
+    if (bookSearch.data.totalItems > 0) setBooks(bookSearch);
+    else {setBooks("")}
   }
 
   return (
