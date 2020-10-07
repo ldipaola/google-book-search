@@ -1,9 +1,10 @@
 import React from "react";
+import SavedSearch from "../components/SavedSearch";
 
 export default function Saved() {
   return (
     <div>
-      <h1>Saved books</h1>
+      <SavedSearch />
     </div>
   );
 }
