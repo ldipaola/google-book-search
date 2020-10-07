@@ -39,7 +39,7 @@ export default function SearchResults() {
       <div key={shortid.generate()} className="card search results">
         <div className="card-image">
           <img
-            src={book.volumeInfo.imageLinks.thumbnail}
+            src={book.volumeInfo.imageLinks === undefined ? "": book.volumeInfo.imageLinks.thumbnail}
             className="img-responsive" alt="book cover"
           />
         </div>
