@@ -13,7 +13,18 @@ export default function SearchBar() {
 
     console.log(bookSearch);
     if (bookSearch.data.totalItems > 0) setBooks(bookSearch);
-    else {setBooks("")}
+    else {setBooks("No Results")}
+  }
+
+  const handleKeyPress = async (e) => {
+    if(e.key === "Enter"){
+      
+    const bookSearch = await axios.get("https://www.googleapis.com/books/v1/volumes?q="+search+"+intitle&printType=books");
+
+    console.log(bookSearch);
+    if (bookSearch.data.totalItems > 0) setBooks(bookSearch);
+    else {setBooks("No Results")}
+  }
   }
 
   return (
@@ -25,7 +36,7 @@ export default function SearchBar() {
       </div>
       <div className="card-body">
       <div className="input-group ">
-          <input className="form-input" type="text" placeholder="search" onChange={(e) => setSearch(e.target.value.trim())} />
+          <input className="form-input" type="text" placeholder="search" onKeyPress={handleKeyPress} onChange={(e) => setSearch(e.target.value.trim())} />
           <button className="btn btn-primary input-group-btn" onClick={handleSubmit}>Search</button>
         </div>
       </div>
