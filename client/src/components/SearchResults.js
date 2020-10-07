@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import BooksContext from "../utils/booksContext";
+import shortid from 'shortid';
 import api from "../utils/api";
 import "./searchResults.css";
 
+
 export default function SearchResults() {
-  const { books, setBooks } = useContext(BooksContext);
+  const { books } = useContext(BooksContext);
   let booksToRender = "";
   const handleClick = function (e) {
     e.preventDefault();
@@ -34,7 +36,7 @@ export default function SearchResults() {
 
   if (books) {
     booksToRender = books.data.items.map((book) => (
-      <div  key={book.id} className="card search results">
+      <div key={shortid.generate()} className="card search results">
         <div className="card-image">
           <img
             src={book.volumeInfo.imageLinks.thumbnail}
@@ -48,8 +50,8 @@ export default function SearchResults() {
           </div>
           <div className="card-subtitle text-gray">
             {book.volumeInfo.authors ? book.volumeInfo.authors.map((author) => (
-              <p style={{marginBottom: "0px"}}>{author}</p>
-            )) : <p style={{marginBottom: "0px"}}>{book.volumeInfo.publisher}</p> }
+              <p key={shortid.generate()} style={{marginBottom: "0px"}}>{author}</p>
+            )) : <p key={shortid.generate()} style={{marginBottom: "0px"}}>{book.volumeInfo.publisher}</p> }
           </div>
         </div>
         <div className="card-body">{book.volumeInfo.description}</div>
@@ -60,7 +62,7 @@ export default function SearchResults() {
           >
             View
           </a>
-          <a href="#" className="btn btn-primary" data-value={book.id}  onClick={handleClick}>Save</a>
+          <button className="btn btn-primary" data-value={book.id}  onClick={handleClick}>Save</button>
         </div>
       </div>
     ));
