@@ -24,7 +24,7 @@ export default function SavedSearch() {
               key={book._id}
               id={book._id}
               title={book.title}
-              author={book.author}
+              author={book.authors}
               description={book.description}
               image={book.image}
               link={book.link}
