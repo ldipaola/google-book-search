@@ -1,0 +1,1 @@
+{"version":3,"sources":["searchResults.css"],"names":[],"mappings":"AAAA,qBACI,cACJ,CAEA,EACI,gBACJ","file":"main.ebb9e487.chunk.css","sourcesContent":[".card.search.results {\r\n    margin-top: 8px;\r\n}\r\n\r\na {\r\n    margin-right: 4px;\r\n}"]}
