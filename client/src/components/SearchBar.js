@@ -10,9 +10,8 @@ export default function SearchBar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bookSearch = await axios.get("https://www.googleapis.com/books/v1/volumes?q="+search+"intitle");
-
-    console.log(bookSearch);
     if (bookSearch.data.totalItems > 0) setBooks(bookSearch);
+
     else {setBooks("No Results")}
   }
 
@@ -20,8 +19,6 @@ export default function SearchBar() {
     if(e.key === "Enter"){
       
     const bookSearch = await axios.get("https://www.googleapis.com/books/v1/volumes?q="+search+"+intitle&printType=books");
-
-    console.log(bookSearch);
     if (bookSearch.data.totalItems > 0) setBooks(bookSearch);
     else {setBooks("No Results")}
   }
